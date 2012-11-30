@@ -1,0 +1,137 @@
+# Executable files
+bin/hci_qcomm_init
+bin/hostapd
+bin/mm-qcamera-daemon
+bin/mpdecision
+bin/netmgrd
+bin/rmt_storage
+bin/qmuxd
+bin/thermald
+bin/time_daemon
+bin/cnd
+bin/bridgemgrd
+bin/port-bridge
+bin/qmiproxy
+bin/sensors.qcom
+bin/quipc_igsn
+bin/quipc_main
+bin/ATFWD-daemon
+bin/hdmid
+bin/mm-pp-daemon
+bin/rild
+bin/ftm_ptt
+bin/gsiff_daemon
+bin/qseecomd
+bin/atd
+
+# Audio
+lib/libacdbloader.so
+lib/libaudcal.so
+
+# Camera
+lib/libchromatix_imx074_default_video.so
+lib/libchromatix_imx074_preview.so
+lib/libchromatix_imx074_video_hd.so
+lib/libchromatix_imx074_zsl.so
+lib/libchromatix_imx091_default_video.so
+lib/libchromatix_imx091_preview.so
+lib/libchromatix_imx091_video_hd.so
+lib/libchromatix_imx111_default_video.so
+lib/libchromatix_imx111_preview.so
+lib/libchromatix_imx111_zsl.so
+lib/libchromatix_imx119_default_video.so
+lib/libchromatix_imx119_preview.so
+lib/libchromatix_imx119_vt.so
+lib/libchromatix_ov2720_default_video.so
+lib/libchromatix_ov2720_preview.so
+lib/libchromatix_s5k3l1yx_default_video.so
+lib/libchromatix_s5k3l1yx_hfr_120fps.so
+lib/libchromatix_s5k3l1yx_hfr_60fps.so
+lib/libchromatix_s5k3l1yx_hfr_90fps.so
+lib/libchromatix_s5k3l1yx_preview.so
+lib/libchromatix_s5k3l1yx_video_hd.so
+lib/libchromatix_s5k3l1yx_zsl.so
+lib/libchromatix_s5k4e1_default_video.so
+lib/libchromatix_s5k4e1_preview.so
+lib/libchromatix_s5k4e1_zsl.so
+lib/hw/camera.msm8960.so
+lib/libcamera_client.so
+lib/libgemini.so
+lib/libmmcamera_faceproc.so
+lib/libmmcamera_frameproc.so
+lib/libmmcamera_statsproc30.so
+lib/libmmipl.so
+lib/libmmjpeg.so
+lib/liboemcamera.so
+lib/libOlaFaceDetector.so
+lib/libOlaLGECameraJNI.so
+lib/libimage-jpeg-enc-omx-comp.so
+lib/libimage-omx-common.so
+lib/libmmosal.so
+lib/libmmparser.so
+lib/libmmstillomx.so
+
+# Graphics
+lib/egl/eglsubAndroid.so
+lib/egl/libEGL_adreno200.so
+lib/egl/libGLESv1_CM_adreno200.so
+lib/egl/libGLESv2_adreno200.so
+lib/egl/libGLESv2S3D_adreno200.so
+lib/egl/libq3dtools_adreno200.so
+lib/libC2D2.so
+lib/libsc-a2xx.so
+lib/libsc-a3xx.so
+
+# GPS
+lib/hw/gps.default.so
+lib/libgps.so
+lib/libgps.utils.so
+lib/libloc_adapter.so
+lib/libloc_api_v02.so
+lib/libloc_eng.so
+lib/libloc_ext.so
+
+# Misc libraries
+lib/libgsl.so
+lib/libmm-color-convertor.so
+lib/libOpenVG.so
+
+# Qualcomm common libs
+lib/libdiag.so
+lib/libdsi_netctrl.so
+lib/libdsutils.so
+lib/libidl.so
+lib/libqdi.so
+lib/libqdp.so
+lib/libqmi.so
+lib/libqmi_cci.so
+lib/libqmi_common_so.so
+lib/libqmi_csi.so
+lib/libqmi_encdec.so
+lib/libqmiservices.so
+
+# Radio
+lib/libnetmgr.so
+lib/libqc-opt.so
+lib/libril-qc-qmi-1.so
+lib/libril-qcril-hook-oem.so
+lib/libril.so
+
+# Sensors
+lib/hw/sensors.msm8960.so
+lib/libsensor1.so
+lib/libsensor_reg.so
+lib/libami306.so
+
+# Bluetooth
+lib/liblgftmitem.so
+
+# Wifi
+lib/modules/mwlan_aarp.ko
+lib/modules/wlan.ko
+
+# Light
+lib/hw/lights.msm8960.so
+
+# NFC
+lib/hw/nfc.msm8960.so

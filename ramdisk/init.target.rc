@@ -1,0 +1,229 @@
+# Copyright (c) 2011, Code Aurora Forum. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#     * Neither the name of Code Aurora Forum, Inc. nor the names of its
+#       contributors may be used to endorse or promote products derived
+#       from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
+
+# LGE_CHANGE
+# To enumerate USB, move from /etc/init.*.usb.rc
+# 2011-12-01, hyunhui.park@lge.com
+#
+import init.lge.usb.rc
+
+#start camera server as daemon
+service qcamerasvr /system/bin/mm-qcamera-daemon
+        class late_start
+        user system
+        group system camera inet
+
+#start GNSS/Sensor interface daemon
+service gsiff_daemon /system/bin/gsiff_daemon
+    class late_start
+    user system
+    group qcom_oncrpc
+
+# LGE_CHANGE For MTP
+on init
+    export EXTERNAL_ADD_STORAGE /mnt/sdcard/external_sd
+
+# on emmc mount the partition containing firmware
+on fs
+
+# Create mount point for LG Specific functions
+   mkdir /sns 0771 system system
+   mkdir /persist-lg 0771 system system
+   mkdir /mpt 0775 system system
+
+   mount ext4 /dev/block/platform/msm_sdcc.1/by-name/sns /sns nosuid nodev barrier=1 noauto_da_alloc
+   mount ext4 /dev/block/platform/msm_sdcc.1/by-name/drm /persist-lg nosuid nodev barrier=1 noauto_da_alloc
+   mount ext4 /dev/block/platform/msm_sdcc.1/by-name/mpt /mpt nosuid nodev barrier=1 noauto_da_alloc
+
+   mkdir /sns/cal 0771 system system
+   mkdir /tombstones 0771 system system
+   mount ext4 /dev/block/platform/msm_sdcc.1/by-name/tombstones /tombstones nosuid nodev barrier=1
+   mkdir /tombstones/modem 0771 system system
+   mkdir /tombstones/lpass 0771 system system
+   mkdir /tombstones/wcnss 0771 system system
+   mkdir /tombstones/dsps 0771 system system
+   mkdir /firmware 0771 system system
+   wait /dev/block/mmcblk0p1
+#LGE_CHANGE_S, [jiseok.kang], 2011-02-10, NON-HLOS image file permission
+   mount vfat /dev/block/mmcblk0p1 /firmware ro umask=002 shortname=lower
+#LGE_CHANGE_E, [jiseok.kang], 2011-02-10, NON-HLOS image file permission
+   exec /system/bin/sh /system/etc/init.qcom.modem_links.sh
+   exec /system/bin/sh /system/etc/init.qcom.mdm_links.sh
+
+# LGE_CHANGE For MISC
+# vibrator
+   chown system system /sys/class/timed_output/vibrator/amp
+   chmod 0660 /sys/class/timed_output/vibrator/amp
+# LGE_CHANGE For MISC
+
+on post-fs
+   mount ext4 /dev/block/platform/msm_sdcc.1/by-name/system /system ro remount barrier=1
+
+# NFC Feature
+   chmod 0666 /dev/pn544
+
+on post-fs-data
+# on post-fs-data //already defined MTP
+    chown system system /persist-lg
+    chmod 0771 /persist-lg
+
+    #LGDRM
+    mkdir /persist-lg/lgdrm 0770 lgdrm lgdrm_acc
+    chown lgdrm lgdrm_acc /persist-lg/lgdrm
+    chmod 0770 /persist-lg/lgdrm
+
+    #Widevine
+    mkdir /persist-lg/widevine 0770 system system
+    chown system system /persist-lg/widevine
+    chmod 0770 /persist-lg/widevine
+
+    #DivX
+    mkdir /persist-lg/multimedia 0770 media divxdrm
+    chown media divxdrm /persist-lg/multimedia
+    chmod 0770 /persist-lg/multimedia
+
+    # create dirs if not exist
+    mkdir /data/lgdrm 0770 lgdrm lgdrm_acc
+# LGE_CHANGE_E For DRM
+
+# LGE_CHANGE_S For DivxDRM, Nextreaming
+    mkdir /persist-lg/multimedia/nx 0770 media divxdrm
+    chown media divxdrm /persist-lg/multimedia/nx
+    chmod 0770 /persist-lg/multimedia/nx
+
+    mkdir /persist-lg/multimedia/uma 0770 media divxdrm
+    chown media divxdrm /persist-lg/multimedia/uma
+    chmod 0770 /persist-lg/multimedia/uma
+
+    mkdir /persist-lg/multimedia/scnt 0770 media divxdrm
+    chown media divxdrm /persist-lg/multimedia/scnt
+    chmod 0770 /persist-lg/multimedia/scnt
+
+    mkdir /persist-lg/multimedia/scnt/sdadf 0770 media divxdrm
+    chown media divxdrm /persist-lg/multimedia/scnt/sdadf
+    chmod 0770 /persist-lg/multimedia/scnt/sdadf
+# LGE_CHANGE_E For DivxDRM, Nextreaming
+
+# LGE_CHANGE For MTP
+# we will remap this as /mnt/sdcard with the sdcard fuse tool
+    mkdir /data/media 0775 media_rw media_rw
+    chown media_rw media_rw /data/media
+
+# LGE_CHANGE, LGE_UPDATE_S
+# The support of external sd
+# 2012-03-05 G1-FS@lge.com
+    mkdir /data/media/external_sd 0000 system system
+# LGE_UPDATE_E
+
+# LGE_CHANGE For MLT
+   chown system system /mpt
+    chmod 0775 /mpt
+
+# create virtual SD card at /mnt/sdcard, based on the /data/media directory
+# daemon will drop to user/group system/media_rw after initializing
+# underlying files in /data/media will be created with user and group media_rw (1023)
+service sdcard /system/bin/sdcard /data/media 1023 1023
+    class late_start
+
+on boot
+   write /sys/devices/i2c-3/3-0024/cyttsp_update_fw 1
+   start qcamerasvr
+   
+# LGE_CHAGE_S, 20120308, inmo.nam@lge.com, For Log Service
+   chown system system /sys/power/lge_logstart
+   chmod 0660 /sys/power/lge_logstart
+# LGE_CHAGE_E, inmo.nam@lge.com, For Log Service
+
+# partition for storing factory items
+   chown root system /dev/block/platform/msm_sdcc.1/by-name/misc
+   chmod 0660 /dev/block/platform/msm_sdcc.1/by-name/misc
+
+# Change owner to read partition size for Code CRC
+   chown root system /dev/block/platform/msm_sdcc.1/by-name/aboot
+   chmod 0660 /dev/block/platform/msm_sdcc.1/by-name/aboot
+   chown root system /dev/block/platform/msm_sdcc.1/by-name/boot
+   chmod 0660 /dev/block/platform/msm_sdcc.1/by-name/boot
+
+# [20111228 matthew.kim@lge.com] For Fake Battery Mode
+   chown system system /sys/devices/platform/msm_ssbi.0/pm8921-core/pm8921-charger/power_supply/battery/pseudo_batt
+# [20111228 matthew.kim@lge.com]
+
+# [START_LGE_HiddenMenu], ADD, smorke@lge.com, 2011-12-30, Add Modem subsystem
+   chown system system /sys/module/subsystem_restart/parameters/restart_level
+# [START_LGE_HiddenMenu], ADD, smorke@lge.com, 2011-12-30, Add Modem subsystem
+
+# Change owner and mode for qfusing file
+  chown root system /sys/devices/platform/lge-msm8960-qfprom/qfusing
+  chmod 0660 /sys/devices/platform/lge-msm8960-qfprom/qfusing
+
+# LGE_CHANGE_S, remove debugfs mounting for CTS test
+# mount debugfs
+# mount debugfs /sys/kernel/debug /sys/kernel/debug
+
+service thermald /system/bin/thermald
+   class main
+   user root
+   group root
+
+service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
+   user root
+   disabled
+
+service qseecomd /system/bin/qseecomd
+   class late_start
+   user system
+   group system
+
+# LGE_CHANGE_S, Add atd service
+service atd /system/bin/atd /dev/ttyGS0 /dev/smd0
+   class main
+   socket atd stream 0660 system inet
+   disabled
+
+on property:ro.baseband="msm"
+   start atd
+# LGE_CHANGE_E
+
+on chargerlogo_adbd
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 1004
+    write /sys/class/android_usb/android0/idProduct 61FA
+    write /sys/class/android_usb/android0/bDeviceClass 239
+    write /sys/class/android-usb/android0/bDeviceSubClass 2
+    write /sys/class/android-usb/android0/bDeviceProtocol 1
+    write /sys/class/android_usb/android0/f_acm/acm_transports tty
+    write /sys/class/android_usb/android0/f_diag/clients diag
+    write /sys/class/android_usb/android0/functions acm,diag,mass_storage,adb
+    write /sys/class/android_usb/android0/iSerial $ro.serialno
+    write /sys/class/android_usb/android0/enable 1
+    start adbd
+
+on property:init.svc.bootanim=stopped
+    write /sys/module/lge_handle_panic/parameters/on_hidden_reset 0
+
