@@ -71,17 +71,6 @@ lib/libmmosal.so
 lib/libmmparser.so
 lib/libmmstillomx.so
 
-# Graphics
-lib/egl/eglsubAndroid.so
-lib/egl/libEGL_adreno200.so
-lib/egl/libGLESv1_CM_adreno200.so
-lib/egl/libGLESv2_adreno200.so
-lib/egl/libGLESv2S3D_adreno200.so
-lib/egl/libq3dtools_adreno200.so
-lib/libC2D2.so
-lib/libsc-a2xx.so
-lib/libsc-a3xx.so
-
 # GPS
 lib/hw/gps.default.so
 lib/libgps.so
@@ -92,9 +81,7 @@ lib/libloc_eng.so
 lib/libloc_ext.so
 
 # Misc libraries
-lib/libgsl.so
 lib/libmm-color-convertor.so
-lib/libOpenVG.so
 
 # Qualcomm common libs
 lib/libdiag.so

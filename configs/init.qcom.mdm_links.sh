@@ -1,3 +1,4 @@
+#!/system/bin/sh
 # Copyright (c) 2011, Code Aurora Forum. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -24,14 +25,23 @@
 # WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
 
-# mount point	fstype		device			[device2]
+# No path is set up at this point so we have to do it here.
+PATH=/sbin:/system/sbin:/system/bin:/system/xbin
+export PATH
 
-/boot		emmc		/dev/block/platform/msm_sdcc.1/by-name/boot
-/cache		ext4		/dev/block/platform/msm_sdcc.1/by-name/cache
-/data		ext4		/dev/block/platform/msm_sdcc.1/by-name/userdata
-/misc		emmc		/dev/block/platform/msm_sdcc.1/by-name/misc
-/recovery	emmc		/dev/block/platform/msm_sdcc.1/by-name/recovery
-/sdcard		datamedia	/dev/null
-/external_sd	vfat		/dev/block/mmcblk1p1	/dev/block/mmcblk1
-/system		ext4		/dev/block/platform/msm_sdcc.1/by-name/system
+MDM_IMAGES=/firmware/image
+cd $MDM_IMAGES
+ln -s $MDM_IMAGES/apps.mbn /system/etc/firmware/apps.mbn 2>/dev/null
+ln -s $MDM_IMAGES/dsp1.mbn /system/etc/firmware/dsp1.mbn 2>/dev/null
+ln -s $MDM_IMAGES/dsp2.mbn /system/etc/firmware/dsp2.mbn 2>/dev/null
+ln -s $MDM_IMAGES/dsp3.mbn /system/etc/firmware/dsp3.mbn 2>/dev/null
+ln -s $MDM_IMAGES/rpm.mbn  /system/etc/firmware/rpm.mbn  2>/dev/null
+ln -s $MDM_IMAGES/sbl1.mbn /system/etc/firmware/sbl1.mbn 2>/dev/null
+ln -s $MDM_IMAGES/sbl2.mbn /system/etc/firmware/sbl2.mbn 2>/dev/null
+
+cd /
+
+

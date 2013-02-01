@@ -31,6 +31,7 @@ persist.rild.nitz_short_ons_3=
 DEVICE_PROVISIONED=1
 debug.sf.hw=1
 debug.egl.hw=1
+debug.enabletr=true
 debug.composition.type=dyn
 ro.sf.compbypass.enable=1
 dev.pm.dyn_samplingrate=1

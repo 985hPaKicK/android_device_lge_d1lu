@@ -29,8 +29,14 @@ COMMON_GLOBAL_CFLAGS += -DF160 -DF160L
 # inherit from common msm8960
 -include device/lge/msm8960-common/BoardConfigCommon.mk
 
+# Include path
+TARGET_SPECIFIC_HEADER_PATH := device/lge/d1lu/include
+
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := D1LU
+
+# Bluetooth
+TARGET_CUSTOM_BLUEDROID := ../../../device/lge/d1lu/bluetooth/bluetooth.c
 
 # Kernel
 BOARD_KERNEL_BASE := 0x80200000
@@ -38,6 +44,7 @@ BOARD_KERNEL_PAGE_SIZE := 2048
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=d1lu lpj=676678
 BOARD_FORCE_RAMDISK_ADDRESS := 0x81500000
 
+# Fake kernel
 TARGET_PREBUILT_KERNEL := device/lge/d1lu/kernel
 LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 
@@ -52,6 +59,14 @@ PRODUCT_COPY_FILES += \
 TARGET_PROVIDES_LIBLIGHTS := true
 
 # Wifi
+WPA_SUPPLICANT_VERSION           := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
+BOARD_HOSTAPD_DRIVER             := NL80211
+BOARD_WLAN_DEVICE                := qcwcn
+WIFI_DRIVER_FW_PATH_STA          := "sta"
+WIFI_DRIVER_FW_PATH_AP           := "ap"
+WIFI_DRIVER_FW_PATH_P2P          := "p2p"
+
 WIFI_DRIVER_MODULE_NAME          := wlan
 WIFI_DRIVER_MODULE_PATH          := "/system/lib/modules/wlan.ko"
 

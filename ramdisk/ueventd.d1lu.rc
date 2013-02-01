@@ -1,6 +1,0 @@
-/dev/oncrpc/*             0660   root       qcom_oncrpc
-# LGE_BROADCAST_TDMB
-/dev/broadcast0           0660  media        media
-
-# LGE_COMPRESSED_PATH
-/dev/ioctl_hdmi	      0666  root        root

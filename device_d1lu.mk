@@ -22,47 +22,42 @@ $(call inherit-product, device/lge/msm8960-common/msm8960.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/lge/d1lu/overlay
 
-# Boot ramdisk setup
+# Qualcomm scripts
 PRODUCT_COPY_FILES += \
-    device/lge/d1lu/ramdisk/init.rc:root/init.rc \
-    device/lge/d1lu/ramdisk/init.d1lu.rc:root/init.d1lu.rc \
-    device/lge/d1lu/ramdisk/init.target.rc:root/init.target.rc \
-    device/lge/d1lu/ramdisk/init.lge.early.rc:root/init.lge.early.rc \
-    device/lge/d1lu/ramdisk/init.grand.rc:root/init.grand.rc \
-    device/lge/d1lu/ramdisk/init.lge.usb.rc:root/init.lge.usb.rc \
-    device/lge/d1lu/ramdisk/init.qcom.usb.rc:root/init.qcom.usb.rc \
-    device/lge/d1lu/ramdisk/ueventd.rc:root/ueventd.rc \
-    device/lge/d1lu/ramdisk/ueventd.grand.rc:root/ueventd.grand.rc \
-    device/lge/d1lu/ramdisk/ueventd.d1lu.rc:root/ueventd.d1lu.rc
+    device/lge/d1lu/configs/init.lge_dut.bt.sh:/system/etc/init.lge_dut.bt.sh \
+    device/lge/d1lu/configs/init.qcom.bt.sh:/system/etc/init.qcom.bt.sh \
+    device/lge/d1lu/configs/init.qcom.coex.sh:/system/etc/init.qcom.coex.sh \
+    device/lge/d1lu/configs/init.qcom.fm.sh:/system/etc/init.qcom.fm.sh \
+    device/lge/d1lu/configs/init.qcom.ftm_module.sh:/system/etc/init.qcom.ftm_module.sh \
+    device/lge/d1lu/configs/init.qcom.ftm_module_out.sh:/system/etc/init.qcom.ftm_module_out.sh \
+    device/lge/d1lu/configs/init.qcom.mdm_links.sh:/system/etc/init.qcom.mdm_links.sh \
+    device/lge/d1lu/configs/init.qcom.modem_links.sh:/system/etc/init.qcom.modem_links.sh \
+    device/lge/d1lu/configs/init.qcom.post_boot.sh:/system/etc/init.qcom.post_boot.sh \
+    device/lge/d1lu/configs/init.qcom.sdio.sh:/system/etc/init.qcom.sdio.sh \
+    device/lge/d1lu/configs/init.qcom.wifi.sh:/system/etc/init.qcom.wifi.sh \
+    device/lge/d1lu/configs/init.wlan-on-off.sh:/system/etc/init.wlan-on-off.sh
+
+# MSM8960 firmware
+PRODUCT_COPY_FILES += \
+    device/lge/d1lu/firmware/cyttsp_8960_cdp.hex:/system/etc/firmware/cyttsp_8960_cdp.hex \
+    device/lge/d1lu/firmware/vidc_1080p.fw:/system/etc/firmware/vidc_1080p.fw
 
 # GPS config
 PRODUCT_COPY_FILES += device/common/gps/gps.conf_AS:system/etc/gps.conf
 
 # Media config
 PRODUCT_COPY_FILES += \
-    device/lge/msm8960-common/configs/media_profiles.xml:system/etc/media_profiles.xml \
-    device/lge/msm8960-common/configs/media_codecs.xml:system/etc/media_codecs.xml
+    device/lge/d1lu/configs/media_profiles.xml:system/etc/media_profiles.xml
 
 # vold config
 PRODUCT_COPY_FILES += \
     device/lge/d1lu/configs/vold.fstab:system/etc/vold.fstab
 
-# wifi config
-PRODUCT_COPY_FILES += \
-    device/lge/d1lu/configs/wpa_supplicant.conf:/system/etc/wifi/wpa_supplicant.conf
-
 # thermald config
 PRODUCT_COPY_FILES += \
     device/lge/d1lu/configs/thermald.conf:/system/etc/thermald.conf
 
-# apn config
-PRODUCT_COPY_FILES += \
-    device/lge/d1lu/configs/apns-conf.xml:/system/etc/apns-conf.xml
-
-# Sound configs
-PRODUCT_COPY_FILES += \
-    device/lge/d1lu/configs/audio_policy.conf:system/etc/audio_policy.conf
-
+# snd_soc_msm
 PRODUCT_COPY_FILES += \
     device/lge/d1lu/dsp/snd_soc_msm/DL_REC:/system/etc/snd_soc_msm/DL_REC \
     device/lge/d1lu/dsp/snd_soc_msm/DL_REC_2x:/system/etc/snd_soc_msm/DL_REC_2x \
@@ -87,6 +82,10 @@ PRODUCT_COPY_FILES += \
     device/lge/d1lu/dsp/snd_soc_msm/Voice_Call_IP:/system/etc/snd_soc_msm/Voice_Call_IP \
     device/lge/d1lu/dsp/snd_soc_msm/Voice_Call_IP_2x:/system/etc/snd_soc_msm/Voice_Call_IP_2x
 
+# Sound effects
+PRODUCT_COPY_FILES += \
+    device/lge/d1lu/configs/audio_effects.conf:system/etc/audio_effects.conf
+
 # Keylayouts and Keychars
 PRODUCT_COPY_FILES += \
     device/lge/d1lu/keylayout/MHLRCP.kl:system/usr/keylayout/MHLRCP.kl \
@@ -101,6 +100,25 @@ PRODUCT_COPY_FILES += \
     device/lge/d1lu/idc/melfas-ts.idc:system/usr/idc/melfas-ts.idc \
     device/lge/d1lu/idc/osp-input.idc:system/usr/idc/osp-input.idc
 
+# Wifi firmware
+PRODUCT_COPY_FILES += \
+    device/lge/d1lu/firmware/WCNSS_cfg.dat:/system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
+    device/lge/d1lu/firmware/WCNSS_qcom_cfg.ini:/system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini \
+    device/lge/d1lu/firmware/WCNSS_qcom_wlan_nv.bin:/system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
+
+# Wifi config
+PRODUCT_COPY_FILES += \
+    device/lge/d1lu/configs/wpa_supplicant.conf:/system/etc/wifi/wpa_supplicant.conf
+
+# Video (Temp)
+PRODUCT_COPY_FILES += \
+    device/lge/d1lu/prebuilt/libOmxVdec.so:/obj/lib/libOmxVdec.so \
+    device/lge/d1lu/prebuilt/libOmxVdec.so:/system/lib/libOmxVdec.so
+
+# NFCEE access control
+PRODUCT_COPY_FILES += \
+    device/lge/d1lu/configs/nfcee_access.xml:system/etc/nfcee_access.xml
+
 # Camera
 PRODUCT_PACKAGES += \
     libcameraservice
@@ -113,19 +131,19 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Torch
 
+# hostapd
+PRODUCT_PACKAGES += \
+    hostapd
+
 # Kernel modules
 PRODUCT_COPY_FILES += \
     device/lge/d1lu/modules/wlan.ko:/system/lib/modules/wlan.ko \
     device/lge/d1lu/modules/mwlan_aarp.ko:/system/lib/modules/mwlan_aarp.ko
 
-# 2nd-init ramdisk
+# 2nd-init
 PRODUCT_COPY_FILES += \
-    device/lge/d1lu/prebuilt/cm10.tar:/system/xbin/cm10.tar
-
-
-# Permissions
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml
+    device/lge/d1lu/2nd-init/recovery.tar:/system/xbin/recovery.tar \
+    device/lge/d1lu/2nd-init/cm10.tar:/system/xbin/cm10.tar
 
 # Extra properties
 PRODUCT_PROPERTY_OVERRIDES += \
